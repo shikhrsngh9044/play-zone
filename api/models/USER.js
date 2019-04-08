@@ -28,7 +28,8 @@ const userSchema = mongoose.Schema({
     ref: 'ORG_PROFILE'
   },
   games: [{
-    game: { type: mongoose.Schema.Types.ObjectId, ref: 'GAME' }
+    game: { type: mongoose.Schema.Types.ObjectId, ref: 'GAME' },
+    level: { type: String }
   }],
   palyedGames: [{
     type: mongoose.Schema.Types.ObjectId,

@@ -7,8 +7,10 @@ const orgProfileSchema = mongoose.Schema({
     ref: 'USER'
   },
   organised_matches: [{
-    
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'MATCH'
   }],
+  
 });
 
 module.exports = mongoose.model('ORG_PROFILE', orgProfileSchema);
