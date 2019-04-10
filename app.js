@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const logger = require('./logger');
 const dotenv = require('dotenv');
+const passport = require("passport");
 dotenv.config();
 //--------------------------------------------------------------------//
 
@@ -71,7 +72,8 @@ mongoose.connect(process.env.DATABASE_URL, {
 	.catch(err => logger.log('info',`databse error: ${err}`));
 //--------------------------------------------------------------------//
 
-
+// passport middleware
+app.use(passport.initialize());
 
 //setting up error handling if no routes full fill request
 app.use((req, res, next) => {
@@ -84,7 +86,7 @@ app.use((error, req, res, next) => {
 	res.status(error.status || 500);
 	res.json({
     message: error.message,
-		error: error.error || 'server internal error'
+		error: error || 'server internal error'
 	});
 });
 //--------------------------------------------------------------------//
