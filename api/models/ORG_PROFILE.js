@@ -13,22 +13,6 @@ const orgProfileSchema = mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "MATCH"
     }
-  ],
-
-  blocked_players: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "USER"
-    }
-  ],
-
-  organiser_teams: [
-    [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: "USER"
-      }
-    ]
   ]
 });
 
