@@ -13,7 +13,14 @@ const orgProfileSchema = mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "MATCH"
     }
-  ],
+  ], //Single matches
+
+  organised_tournaments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "TOURNAMENT"
+    }
+  ], //Tournaments
 
   blocked_players: [
     {
@@ -22,14 +29,12 @@ const orgProfileSchema = mongoose.Schema({
     }
   ],
 
-  organiser_teams: [
-    [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: "USER"
-      }
-    ]
-  ]
+  organiser_clan: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "USER"
+    }
+  ] //Organiser's clan
 });
 
 module.exports = mongoose.model("ORG_PROFILE", orgProfileSchema);
