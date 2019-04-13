@@ -4,7 +4,6 @@ const userSchema = mongoose.Schema({
 	_id: mongoose.Schema.Types.ObjectId,
 	email: {
     type: String,
-    unique: true
   },
 	password: {
     type: String,
@@ -14,15 +13,10 @@ const userSchema = mongoose.Schema({
   },
 	user_name: {
     type: String,
-    unique: true
-  },
-  contact: {
-    type: String,
-    unique: true
   },
 	otp: {
     type: String,
-    default: undefined
+    default: null
   },
 	account_status: {
     type: Boolean,
@@ -39,8 +33,7 @@ const userSchema = mongoose.Schema({
   },
   games: [{
     game: { type: mongoose.Schema.Types.ObjectId, ref: 'GAME' },
-    level: { type: String },
-    in_game_id: { type: String },
+    level: { type: String }
   }],
   palyedGames: [{
     type: mongoose.Schema.Types.ObjectId,
@@ -53,5 +46,6 @@ const userSchema = mongoose.Schema({
 userSchema.post('save', async function () {
   this.password = undefined
 })
+
 
 module.exports = mongoose.model('USER', userSchema);
