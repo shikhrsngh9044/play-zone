@@ -22,6 +22,10 @@ const userSchema = mongoose.Schema({
     type: Boolean,
     default: true
   },
+  verified: {
+    type: Boolean,
+    default: false
+  },
   avatar: { type: String },
   org_profile: {
     type: mongoose.Schema.Types.ObjectId,
@@ -35,6 +39,13 @@ const userSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'GAMES'
   }],
-});
+}, { timestamps: { createdAt: 'created_at' , updatedAt: 'updated_at' } });
+
+
+// removing password field from the user object
+userSchema.post('save', async function () {
+  this.password = undefined
+})
+
 
 module.exports = mongoose.model('USER', userSchema);
