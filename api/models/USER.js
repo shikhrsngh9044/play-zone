@@ -35,10 +35,21 @@ const userSchema = mongoose.Schema({
     game: { type: mongoose.Schema.Types.ObjectId, ref: 'GAME' },
     level: { type: String }
   }],
-  palyedGames: [{
+  palyed_games: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'GAMES'
   }],
+  friend_list: {
+    friends: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'USER' 
+    }],
+    friend_request: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'USER'
+    }]
+  }
+
 }, { timestamps: { createdAt: 'created_at' , updatedAt: 'updated_at' } });
 
 

@@ -28,13 +28,6 @@ const orgProfileSchema = mongoose.Schema({
       ref: "USER"
     }
   ],
-
-  organiser_clan: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "USER"
-    }
-  ] //Organiser's clan
 });
 
 module.exports = mongoose.model("ORG_PROFILE", orgProfileSchema);
