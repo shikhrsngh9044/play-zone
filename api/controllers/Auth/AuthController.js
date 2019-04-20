@@ -89,7 +89,7 @@ async function sendOTP (email) {
 
   await transporter.sendMail(mailOptions, function (err, info) {
     if(err){
-      throw Error(err)
+
     }else{
       USER.updateOne({ email: email }, { $set: { otp: otp } })
       .exec()
@@ -126,7 +126,8 @@ exports.verifyUser = async (req ,res ,next) => {
       var token = await jwt.sign(
         {
           email: user.email,
-          _id: user._id
+          _id: user._id,
+          user_type: 'user'
         },
         process.env.JWT_SECRET_KEY,
         {
@@ -177,11 +178,16 @@ exports.login = async (req ,res ,next) => {
     let isValid = await bcrypt.compare(valid.password, user.password);
 
     if(isValid){
+      var userData = {
+        email: user.email,
+        _id: user._id,
+        user_type: 'user'
+      }
+      if(user.org_profile){
+         userData.org_profile = user.org_profile 
+        }
       var token = await jwt.sign(
-        {
-          email: user.email,
-          _id: user._id
-        },
+        userData,
         process.env.JWT_SECRET_KEY,
         {
           expiresIn: process.env.TOKEN_EXPIRE_TIME
@@ -215,9 +221,13 @@ exports.login = async (req ,res ,next) => {
 //@access   private
 exports.update = async (req ,res ,next) => {
   try {
+    //for development
     var validId = await Joi.validate(req.params, Joi.object().keys({
       userId: Joi.string().min(24).max(24).required()
     }));
+
+    // production
+    // var validId = req.body.userData._id ;
 
     var valid = await Joi.validate(req.body, Joi.object().keys({
       name: Joi.string().required(),

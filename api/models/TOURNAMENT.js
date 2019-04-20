@@ -25,10 +25,10 @@ const tourSchema = mongoose.Schema({
     type: String
   }, //single ,duo , 4-squad
 
-  max_player_count: {
+  max_participant_count: {
     type: Number
   },
-  min_player_count: {
+  min_participant_count: {
     type: Number
   }, // min player or team
 
@@ -53,47 +53,65 @@ const tourSchema = mongoose.Schema({
   //he have to exlude himself from winner's or top players list of each match.and
   //ranking will prepared exluding the organizer.and Each match's sub organizer will be main organizer.
 
-  sub_organiser: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "USER"
-    }
-  ], //if parallel_mathes value is "true" then each one of them will be assigned to the single match which he will host.
+  sub_organiser: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "USER"
+  }], //if parallel_mathes value is "true" then each one of them will be assigned to the single match which he will host.
   //if main organizer is in winner's list and got promoted to next match.then he can reassign himself
 
-  pending_matches: [
-    {
+  matches: [{
+    match: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "MATCH"
+    },
+    completion_status: {
+      type: Boolean,
+      default: false
+    },
+    level: {                                                      // level of match in tournament
+      type: String
     }
-  ], //here match completion status will be used.match which is ongoing or still not started
+  }],
 
-  completed_matches: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "MATCH"
-    }
-  ], //here match completion status will be used.match completed
-
-  players: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "USER"
-    }
-  ],
-
-  requests: [
-    {
+  winner_list: [{                                                 //winner list for tournament 
+    team_rank: { type: Number },
+    player: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "USER"
+    },
+    team_players: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "USER"
+    }]
+  }],
+
+  players: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "USER"
+  }],
+
+  requests: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "USER"
+  }],
+
+  teams: [{                                                       // for team registration
+    team_name: { type: String },
+    team_players: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "USER"
+    }],
+    accept_status: {
+      type: Boolean,
+      default: false
     }
-  ],
+  }],
 
   match_date: {
     type: Date
   },
 
-  status: {
+  payment_status: {
     type: Boolean,
     default: true
   }, //status will be active only when he pays the fee to us. default will be false
@@ -122,15 +140,9 @@ const tourSchema = mongoose.Schema({
     type: String
   },
 
-  timestamps: {
-    created_at: {
-      type: Date,
-      default: Date.now
-    },
-    updated_at: {
-      type: String
-    }
-  }
-});
+  result_iamge: [{
+    image: String
+  }]
+}, { timestamps: { createdAt: 'created_at' , updatedAt: 'updated_at' } });
 
 module.exports = mongoose.model("TOURNAMENT", tourSchema);

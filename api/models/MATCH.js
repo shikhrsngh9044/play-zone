@@ -7,86 +7,76 @@ const matchSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "ORG_PROFILE"
   },
-
-  is_tournament: {
-    type: Boolean,
-    default: false
-  }, //false- single match true- tournament match
-
-  tournament: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "TOURNAMENT"
-  }, // if this match is in tournament.this match will not will be shown in single match list
-
   title: {
     type: String
   },
-
   description: {
     type: String
   },
-
   game: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "GAME"
   },
-
   team_mode: {
     type: String
-  }, //single ,duo , 4-squad
-
-  max_player_count: {
+  },                                                              //single ,duo , 4-squad
+  max_participant_count: {
     type: Number
-  }, // max player or team in a match
-
-  min_player_count: {
+  },                                                              // max player or team in a match
+  min_participant_count: {
     type: Number
-  }, // min player or team
-
-  players: [
-    {
+  },                                                              // min player or team
+  is_tournament: {
+    type: Boolean,
+    default: false
+  },                                                              //false- single match true- tournament match
+  tournament: {
+    type: mongoose.Schema.Types.ObjectId,                         // if this match is in tournament.this match will not will be shown in single match list
+    ref: "TOURNAMENT"
+  },                                                              
+  players: [{                                                     // players array who are accepted to play the match
+    player: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "USER"
+    },
+    accept_status: {
+      type: Boolean,
+      default: false
     }
-  ],
+  }],
 
-  requests: [
-    {
+  winner_list: [{                                                     //winner list for  match 
+    team_rank: { type: Number },
+    player: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "USER"
-    }
-  ],
+    },
+    team_players: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "USER"
+    }]
+  }],
 
-  teams: [
-    {
-      team_name: { type: String },
-      team_players: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "USER"
-        }
-      ]
+  teams: [{                                                       // for team registration
+    team_name: { type: String },
+    team_players: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "USER"
+    }],
+    accept_status: {
+      type: Boolean,
+      default: false
     }
-  ],
-
-  winners: [
-    {
-      rank: { type: Number },
-      player: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "USER"
-      }
-    }
-  ],
+  }],
 
   match_date: {
     type: Date
   },
 
-  status: {
+  payment_status: {                                                       //status will be active only when he pays the fee to us. default will be false
     type: Boolean,
     default: false
-  }, //status will be active only when he pays the fee to us. default will be false
+  }, 
 
   completion_status: {
     type: Boolean,
@@ -96,10 +86,10 @@ const matchSchema = mongoose.Schema({
 
   public_access: {
     type: Boolean,
-    default: true
+    default: false
   }, // public accessbility (default will be public)
 
-  time: {
+  match_time: {
     start: {
       type: Date
     },
@@ -112,15 +102,9 @@ const matchSchema = mongoose.Schema({
     type: String
   },
 
-  timestamps: {
-    created_at: {
-      type: Date,
-      default: Date.now
-    },
-    updated_at: {
-      type: String
-    }
-  }
-});
+  result_iamge: [{
+    image: String
+  }]
+}, { timestamps: { createdAt: 'created_at' , updatedAt: 'updated_at' } });
 
 module.exports = mongoose.model("MATCH", matchSchema);
