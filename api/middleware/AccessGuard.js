@@ -6,7 +6,7 @@ exports.checkAuth = (roles) => {
     try {
       const token = req.headers.authorization.split(" ")[1];
       // console.log('got the token');
-      jwt.verify(token, "feedingtrends009", (err, decoded) => {
+      jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
         if (err) {
           return res.status(401).json({
             message: 'Auth failed',
@@ -14,6 +14,7 @@ exports.checkAuth = (roles) => {
           });
         }
         if (decoded) {
+          console.log('decoded data: ',decoded)
           if(roles.includes(decoded.user_type)){
             req.userData = decoded;
             next();

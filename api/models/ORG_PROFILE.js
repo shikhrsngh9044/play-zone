@@ -28,6 +28,6 @@ const orgProfileSchema = mongoose.Schema({
       ref: "USER"
     }
   ],
-});
+}, { timestamps: { createdAt: 'created_at' , updatedAt: 'updated_at' } });
 
 module.exports = mongoose.model("ORG_PROFILE", orgProfileSchema);

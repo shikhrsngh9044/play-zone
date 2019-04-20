@@ -35,12 +35,14 @@ const matchSchema = mongoose.Schema({
     ref: "TOURNAMENT"
   },                                                              
   players: [{                                                     // players array who are accepted to play the match
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "USER"
-  }],
-  requests: [{                                                    // players array who are request to org to play the match
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "USER"
+    player: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "USER"
+    },
+    accept_status: {
+      type: Boolean,
+      default: false
+    }
   }],
 
   winner_list: [{                                                     //winner list for  match 
@@ -84,7 +86,7 @@ const matchSchema = mongoose.Schema({
 
   public_access: {
     type: Boolean,
-    default: true
+    default: false
   }, // public accessbility (default will be public)
 
   match_time: {
