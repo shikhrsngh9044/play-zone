@@ -4,6 +4,7 @@ const userSchema = mongoose.Schema({
 	_id: mongoose.Schema.Types.ObjectId,
 	email: {
     type: String,
+    unique: true
   },
 	password: {
     type: String,
@@ -13,6 +14,10 @@ const userSchema = mongoose.Schema({
   },
 	user_name: {
     type: String,
+  },
+  contact: {
+    type: String,
+    unique: true
   },
 	otp: {
     type: String,
