@@ -14,10 +14,10 @@ const userSchema = mongoose.Schema({
   },
 	user_name: {
     type: String,
+    unique: true
   },
   contact: {
-    type: String,
-    unique: true
+    type: String
   },
 	otp: {
     type: String,
