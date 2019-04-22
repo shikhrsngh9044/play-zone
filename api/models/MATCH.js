@@ -104,6 +104,13 @@ const matchSchema = mongoose.Schema({
 
   result_iamge: [{
     image: String
+  }],
+  
+  chats: [{
+    chat: { type: String },
+    chatType: { type: String },
+    from: { type:  mongoose.Schema.Types.ObjectId, ref: "USER" },
+    to: { type:  mongoose.Schema.Types.ObjectId, ref: "USER" }
   }]
 }, { timestamps: { createdAt: 'created_at' , updatedAt: 'updated_at' } });
 

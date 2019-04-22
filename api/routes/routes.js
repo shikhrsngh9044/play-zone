@@ -15,6 +15,7 @@ const OrgProController = require('../controllers/OrganiserController');
 // user routes.........................................................................................
 
 router.post('/user/register', AuthController.registerUser);
+router.post('/user/pre-register', AuthController.preUserRegistration);
 router.post('/user/login', AuthController.login);
 router.post('/user/send-otp-request', AuthController.userOTP);
 router.post('/user/reset-password', AuthController.userPasswordReset);
